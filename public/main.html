@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <head>
     <title>Suit Calculator</title>
+    <!-- images taken from https://toontownrewritten.fandom.com/wiki/Cogs -->
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
-    <p>Hello world!</p>
-    <ul>
-        <li>Tier 1</li>
-        <li>Tier 2</li>
-        <li>Tier 3</li>
-        <li>Tier 4</li>
-        <li>Tier 5</li>
-        <li>Tier 6</li>
-        <li>Tier 7</li>
-        <li>Tier 8</li>
-    </ul>
+    <div class="greeting">
+        <p>Hello world!</p>
+    </div>
+
+    <!-- populated via tablecreator js script -->
+    <table id="cog-table">
+    </table>
+
+    <label id="suit-average-label">Suit average:<span id="suit-average-value"></span></label>
+
+    <!-- populated by adding members chosen from cog-table -->
+    <table id="party-table">
+        <tr id="party-table-row">
+
+        </tr>
+    </table>
+
+    <br>
+    <img src="../images/CEO_Difficulty.jpg">
+
+    <script src="../scripts/buttonmaker.js"></script>
+    <script src="../scripts/tablecreator.js"></script>
+    
 </body>

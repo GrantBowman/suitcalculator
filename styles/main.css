@@ -1,0 +1,77 @@
+.greeting p {
+    /* color: royalblue; */
+    color: #ffc;
+    background-color: #009;
+    text-decoration: underline;
+    text-transform: capitalize;
+    text-align: center;
+    letter-spacing: normal;
+    padding: 0.4em;
+    border-style: groove;
+    border-radius: 10px;
+}
+
+#tier-list {
+    float: left;
+    background-color: #ddd;
+}
+
+#stuff {
+    float: right;
+    background-color: #eee;
+}
+
+#more-stuff {
+    float: right;
+    /* visibility: hidden; */
+    /* display: none; */
+    padding-right: 10px;
+    background-color: #ddd;
+}
+
+#more-stuff p::before {
+    content: "Wow!";
+}
+
+/* use this for lining things up: */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox */
+/* also maybe this?: for content in css */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/content */
+
+#cog-table {
+    display: block;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+td {
+    border: 1px;
+    border-style: solid;
+    padding: 5px 3px 5px 1px;
+    border-color: #000;
+}
+
+.inner-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.cog-item {
+    /* width: 25%; */
+    /* display: flex; */
+    /* flex-direction: row; */
+}
+
+.cog-item img {
+    float: left;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.cog-item button {
+    
+}
+
+

@@ -3,7 +3,7 @@
 }
 
 .grad {
-    background-image: linear-gradient(to bottom right, #434d61, #c3c8d2);
+    background: linear-gradient(to bottom right, #434d61, #c3c8d2);
     /* bossbot: #49231d */
     /* bossbot: #816e69 */
     /*  lawbot: #434d61 */
@@ -29,12 +29,12 @@
 
 #tier-list {
     float: left;
-    background-color: #ddd;
+    background: #ddd;
 }
 
 #stuff {
     float: right;
-    background-color: #eee;
+    background: #eee;
 }
 
 #more-stuff {
@@ -42,7 +42,7 @@
     /* visibility: hidden; */
     /* display: none; */
     padding-right: 10px;
-    background-color: #ddd;
+    background: #ddd;
 }
 
 #more-stuff p::before {
@@ -110,12 +110,12 @@ td {
 }
 
 .cog-item label {
-    background-color: rgb(255, 255, 255, 0.3);
+    background: rgb(255, 255, 255, 0.3);
     /* text-shadow: white; */
     /* padding-left: 5px; */
 }
 
 #suit-average-label {
-    background-color: rgb(255, 255, 255, 0.3);
+    background: rgb(255, 255, 255, 0.3);
 }
 

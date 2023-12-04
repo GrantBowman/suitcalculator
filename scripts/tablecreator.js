@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tier = i*4 + j + 1;
             const td = tr.insertCell();
             td.classList.add("cog-item");
+            td.classList.add("grad");
             td.classList.add("tier-"+tier);
             td.appendChild(createTableCell(tier));
             // 1 2 3 4
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 8; i++) {
         const td = partyTableRow.insertCell();
         td.classList.add("cog-item");
+        td.classList.add("grad");
         // td.classList.add("hide");
     }
 
@@ -83,7 +85,6 @@ function addPartyCell(cogCell) {
     // const td = partyTableRow.insertCell();
     const td = partyTableRow.getElementsByTagName("td")[partySize];
     partySize += 1;
-    td.classList.add("cog-item");
 
     cell = document.createElement("div");
     td.appendChild(cell);
@@ -92,6 +93,7 @@ function addPartyCell(cogCell) {
     img.src = cogCell.getElementsByTagName("img")[0].src;
     // img.src = "../images/Cog-bossbot-flunky.webp";
 
+    // TODO: add a div above the label so the trasparency doesnt carry horizontally the row
     const levelLabel = document.createElement("label");
     cell.appendChild(levelLabel);
     levelLabel.classList.add("inner-flex");
@@ -104,6 +106,7 @@ function addPartyCell(cogCell) {
     td.dataset.value = value;
     levelLabel.innerHTML = "Lv. " + level;
 
+    // TODO: add a div above the label so the trasparency doesnt carry horizontally the row
     const valueLabel = document.createElement("label");
     cell.appendChild(valueLabel);
     valueLabel.classList.add("inner-flex");
@@ -116,7 +119,9 @@ function addPartyCell(cogCell) {
     removeButton.addEventListener("click", (e) => {
         // const div = e.target.closest("div");
         const td = e.target.closest("td");
-        td.parentElement.insertCell();
+        const td2 = td.parentElement.insertCell();
+        td2.classList.add("cog-item");
+        td2.classList.add("grad");
         td.parentElement.removeChild(td);
         partySize -= 1;
         console.log("partySize : " + partySize);
@@ -161,6 +166,9 @@ function toggle(e) {
                 image.src = image.src.replace(imgBossbots[i], imgLawbots[i]);
             }
         }
+        for (const elem of document.getElementsByClassName("grad")) {
+            elem.style.background = "linear-gradient(to bottom right, #364557, #afbacc)"
+        }
     }
     else {
         cogType = "bossbot";
@@ -169,6 +177,9 @@ function toggle(e) {
             for (let i = 1; i < imgBossbots.length; i++) {
                 image.src = image.src.replace(imgLawbots[i], imgBossbots[i]);
             }
+        }
+        for (const elem of document.getElementsByClassName("grad")) {
+            elem.style.background = "linear-gradient(to bottom right, #57342b, #aa9d9b)"
         }
     }
     

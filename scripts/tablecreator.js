@@ -1,9 +1,13 @@
 
 const imgBossbots = ["","flunky","pencilpusher","yesman","micromanager","downsizer","headhunter","corporateraider","thebigcheese"];
+const imgLawbots = ["","bottomfeeder","bloodsucker","doubletalker","ambulancechaser","backstabber","spindoctor","legaleagle","bigwig"];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("hello world 2");
+    console.log("loaded tablecreator.js");
     
+    const toggleBtn = document.getElementById("toggle-btn");
+    toggleBtn.addEventListener("click", toggle);
+
     // https://stackoverflow.com/questions/14643617/create-table-using-javascript
     const cogTable = document.getElementById("cog-table");
     for (let i = 0; i < 2; i++) {
@@ -18,13 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
             // 5 6 7 8
         }
     }
+
+    // pre-populate the 8 party slots
+    const partyTableRow = document.getElementById("party-table-row");
+    for (let i = 0; i < 8; i++) {
+        const td = partyTableRow.insertCell();
+        td.classList.add("cog-item");
+        // td.classList.add("hide");
+    }
+
+
 });
 
 function createTableCell(tier) {
     cell = document.createElement("div");
     const img = document.createElement("img");
     cell.appendChild(img);
-    img.src = "../images/Cog-bossbot-"+imgBossbots[tier]+".webp";
+    img.classList.add("tier-"+tier);
+    // img.src = "../images/Cog-bossbot-"+imgBossbots[tier]+".webp";
+    img.src = "../images/Cog-lawbot-"+imgLawbots[tier]+".webp";
     const selectList = document.createElement("select");
     cell.appendChild(selectList);
     selectList.classList.add("inner-flex");
@@ -45,20 +61,28 @@ function createTableCell(tier) {
         selectList.appendChild(option);
     }
     
+    cell.appendChild(document.createElement("br"));
+
     const addButton = document.createElement("button");
     cell.appendChild(addButton);
     addButton.innerHTML = "Add";
     addButton.addEventListener("click", (e) => {
-        addPartyCell(e.target.parentElement);
-        calculateAverage();
+        if (partySize < 8) {
+            addPartyCell(e.target.parentElement);
+            calculateAverage();
+            console.log("partySize : " + partySize);
+        }
     });
 
     return cell;
 }
 
+let partySize = 0;
 function addPartyCell(cogCell) {
     const partyTableRow = document.getElementById("party-table-row");
-    const td = partyTableRow.insertCell();
+    // const td = partyTableRow.insertCell();
+    const td = partyTableRow.getElementsByTagName("td")[partySize];
+    partySize += 1;
     td.classList.add("cog-item");
 
     cell = document.createElement("div");
@@ -67,9 +91,10 @@ function addPartyCell(cogCell) {
     cell.appendChild(img);
     img.src = cogCell.getElementsByTagName("img")[0].src;
     // img.src = "../images/Cog-bossbot-flunky.webp";
-    const label = document.createElement("label");
-    cell.appendChild(label);
-    label.classList.add("inner-flex");
+
+    const levelLabel = document.createElement("label");
+    cell.appendChild(levelLabel);
+    levelLabel.classList.add("inner-flex");
     const select = cogCell.getElementsByTagName("select")[0];
     const selectedOption = select.options[select.selectedIndex];
     const tier = selectedOption.dataset.tier;
@@ -77,14 +102,24 @@ function addPartyCell(cogCell) {
     const value = selectedOption.value;
 
     td.dataset.value = value;
-    label.innerHTML = tier+":"+level+"("+value+")";
+    levelLabel.innerHTML = "Lv. " + level;
+
+    const valueLabel = document.createElement("label");
+    cell.appendChild(valueLabel);
+    valueLabel.classList.add("inner-flex");
+    valueLabel.innerHTML = "Value: " + value;
+
     
     const removeButton = document.createElement("button");
     cell.appendChild(removeButton);
     removeButton.innerHTML = "Remove";
     removeButton.addEventListener("click", (e) => {
+        // const div = e.target.closest("div");
         const td = e.target.closest("td");
+        td.parentElement.insertCell();
         td.parentElement.removeChild(td);
+        partySize -= 1;
+        console.log("partySize : " + partySize);
         calculateAverage();
     });
     // const cogCellCopy = cogCell.cloneNode(true);
@@ -96,12 +131,13 @@ function addPartyCell(cogCell) {
 function calculateAverage() {
     const suitAverageDisplay = document.getElementById("suit-average-value");
     const partyTableRow = document.getElementById("party-table-row");
-    let partySize = 0;
+    // let partySize = 0;
     let partyValue = 0;
     const tds = partyTableRow.getElementsByTagName("td")
-    for (const td of tds) {
+    for (let i = 0; i < partySize; i++) {
+        let td = tds[i]
         console.log(td.dataset.value);
-        partySize += 1;
+        // partySize += 1;
         partyValue += parseInt(td.dataset.value);
     }
     console.log(partyValue, partySize);
@@ -112,3 +148,31 @@ function calculateAverage() {
         suitAverageDisplay.innerHTML = 0;
     }
 }
+
+function toggle(e) {
+    let cogType = e.target.textContent;
+    let images = document.getElementsByTagName("img");
+
+    if (cogType === "bossbot") {
+        cogType = "lawbot";
+        for (const image of images) {
+            image.src = image.src.replace(/bossbot/, cogType);
+            for (let i = 1; i < imgLawbots.length; i++) {
+                image.src = image.src.replace(imgBossbots[i], imgLawbots[i]);
+            }
+        }
+    }
+    else {
+        cogType = "bossbot";
+        for (const image of images) {
+            image.src = image.src.replace(/lawbot/, cogType);
+            for (let i = 1; i < imgBossbots.length; i++) {
+                image.src = image.src.replace(imgLawbots[i], imgBossbots[i]);
+            }
+        }
+    }
+    
+    e.target.textContent = cogType;
+    console.log(cogType);
+}
+

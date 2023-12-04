@@ -2,11 +2,14 @@
 const imgBossbots = ["","flunky","pencilpusher","yesman","micromanager","downsizer","headhunter","corporateraider","thebigcheese"];
 const imgLawbots = ["","bottomfeeder","bloodsucker","doubletalker","ambulancechaser","backstabber","spindoctor","legaleagle","bigwig"];
 
+let partySize = 0;
+let cogType = "";
 document.addEventListener("DOMContentLoaded", () => {
     console.log("loaded tablecreator.js");
     
     const toggleBtn = document.getElementById("toggle-btn");
     toggleBtn.addEventListener("click", toggle);
+    cogType = toggleBtn.textContent;
 
     // https://stackoverflow.com/questions/14643617/create-table-using-javascript
     const cogTable = document.getElementById("cog-table");
@@ -79,7 +82,6 @@ function createTableCell(tier) {
     return cell;
 }
 
-let partySize = 0;
 function addPartyCell(cogCell) {
     const partyTableRow = document.getElementById("party-table-row");
     // const td = partyTableRow.insertCell();
@@ -122,6 +124,14 @@ function addPartyCell(cogCell) {
         const td2 = td.parentElement.insertCell();
         td2.classList.add("cog-item");
         td2.classList.add("grad");
+        // if bowssbot
+        if (cogType === "lawbot") {
+            td2.style.background = "linear-gradient(to bottom right, #364557, #afbacc)"
+        }
+        else if (cogType === "bossbot") {
+            td2.style.background = "linear-gradient(to bottom right, #57342b, #aa9d9b)"
+        }
+
         td.parentElement.removeChild(td);
         partySize -= 1;
         console.log("partySize : " + partySize);
@@ -155,9 +165,9 @@ function calculateAverage() {
 }
 
 function toggle(e) {
-    let cogType = e.target.textContent;
     let images = document.getElementsByTagName("img");
 
+    // turn to lawbot
     if (cogType === "bossbot") {
         cogType = "lawbot";
         for (const image of images) {
@@ -170,6 +180,7 @@ function toggle(e) {
             elem.style.background = "linear-gradient(to bottom right, #364557, #afbacc)"
         }
     }
+    // turn to bossbot
     else {
         cogType = "bossbot";
         for (const image of images) {
